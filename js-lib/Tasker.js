@@ -30,7 +30,7 @@ class Tasker
         this._processCalls++;
         setTimeout(function() {
             self._processCalls--;
-            // console.log('Process', task._name);
+            // console.log('Process', task.name);
             self._processWaitingTasks();
         }, this._waitTime + 1);
     }
@@ -53,10 +53,10 @@ class Tasker
 
     _addWaitingTask(task, args, last_call)
     {
-        if (!(task._name in this._taskInfos_Waiting))
-            this._taskInfos_Waiting[task._name] = new Task.Info();
+        if (!(task.name in this._taskInfos_Waiting))
+            this._taskInfos_Waiting[task.name] = new Task.Info();
 
-        var task_info = this._taskInfos_Waiting[task._name];
+        var task_info = this._taskInfos_Waiting[task.name];
         task_info.addTask(task, args, last_call);
 
         return task_info;
@@ -72,13 +72,13 @@ class Tasker
             var task_name;
 
             for (task_name in this._taskInfos_Waiting) {
-                if (task_name !== task_info.task._name)
+                if (task_name !== task_info.task.name)
                     if (wait_for_regexp.test(task_name))
                         return false;
             }
 
             for (task_name in this._taskInfos_Executing) {
-                if (task_name !== task_info.task._name)
+                if (task_name !== task_info.task.name)
                     if (wait_for_regexp.test(task_name))
                         return false;
             }
@@ -94,8 +94,8 @@ class Tasker
         //     return;
 
         /* Think about debug mode. */
-        delete this._taskInfos_Waiting[task_info.task._name];
-        this._taskInfos_Executing[task_info.task._name] = task_info;
+        delete this._taskInfos_Waiting[task_info.task.name];
+        this._taskInfos_Executing[task_info.task.name] = task_info;
 
         var result = task_info.task._fn.call(null, task_info.argsArray);
 
@@ -104,14 +104,14 @@ class Tasker
 
             result
                 .then(function() {
-                    delete self._taskInfos_Executing[task_info.task._name];
+                    delete self._taskInfos_Executing[task_info.task.name];
 
                     self._addChainedTaskCalls(task_info);
-                    // console.log('Process A', task_info.task._name);
+                    // console.log('Process A', task_info.task.name);
                     self._processWaitingTasks();
                 })
                 .catch(function(err) {
-                    delete self._taskInfos_Executing[task_info.task._name];
+                    delete self._taskInfos_Executing[task_info.task.name];
 
                     if (task_info.task._catches.length > 0) {
                         for (let catch_fn of task_info.task._catches)
@@ -123,16 +123,16 @@ class Tasker
                         console.log('Unhandled task promise rejection:', err);
                     }
 
-                    // console.log('Process B', task_info.task._name);
+                    // console.log('Process B', task_info.task.name);
                     self._processWaitingTasks();
                 });
         } else {
-            delete this._taskInfos_Executing[task_info.task._name];
+            delete this._taskInfos_Executing[task_info.task.name];
 
             if (result !== false)
                 this._addChainedTaskCalls(task_info);
 
-            // console.log('Process C', task_info.task._name);
+            // console.log('Process C', task_info.task.name);
             this._processWaitingTasks();
         }
     }
@@ -164,14 +164,14 @@ class Tasker
 
     _isTaskInfoReadyToExec(task_info)
     {
-        // console.log('isTaskInfoReadyToExec', task_info.task._name);
+        // console.log('isTaskInfoReadyToExec', task_info.task.name);
 
         if (task_info.lastCall !== -1) {
             if (Date.now() < task_info.lastCall + this._waitTime)
                 return false;
         }
 
-        if (task_info.task._name in this._taskInfos_Executing) {
+        if (task_info.task.name in this._taskInfos_Executing) {
             // console.log('B');
             return false;
         }
