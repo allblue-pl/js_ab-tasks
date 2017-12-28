@@ -1,13 +1,13 @@
 'use strict';
 
-const abTypes = require('ab-types');
+const js0 = require('js0');
 
 
 class Task {
 
     constructor(task_name, fn)
     {
-        abTypes.argsE(arguments, 'string', [ 'function', Promise ]);
+        js0.args(arguments, 'string', [ 'function', Promise ]);
 
         Object.defineProperties(this, {
             name: { value: task_name, },
@@ -29,7 +29,7 @@ class Task {
 
     chain(task, ...args)
     {
-        abTypes.argsE(arguments, Task);
+        js0.args(arguments, Task);
 
         this._chainedTaskCalls.push(new Task.Call(task, args));
 
@@ -54,7 +54,7 @@ Object.defineProperties(Task, {
 
         constructor(task, args)
         {
-            abTypes.argsE(arguments, Task, 'object');
+            js0.args(arguments, Task, 'object');
 
             Object.defineProperties(this, {
                 task: { value: task, },
@@ -80,7 +80,7 @@ Object.defineProperties(Task, {
 
         addTask(task, args, last_call = -1)
         {
-            abTypes.argsE(arguments, Task, 'object', 'number');
+            js0.args(arguments, Task, 'object', 'number');
 
             if (last_call !== -1)
                 this.lastCall = last_call;

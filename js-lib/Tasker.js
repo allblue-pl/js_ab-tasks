@@ -1,6 +1,6 @@
 'use strict';
 
-const abTypes = require('ab-types');
+const js0 = require('js0');
 
 const Task = require('./Task');
 
@@ -22,7 +22,7 @@ class Tasker
 
     apply(task, args)
     {
-        abTypes.argsE(arguments, Task);
+        js0.args(arguments, Task);
 
         this._addWaitingTask(task, args, Date.now());
 
@@ -37,7 +37,7 @@ class Tasker
 
     call(task, ...args)
     {
-        abTypes.argsE(arguments, Task);
+        js0.args(arguments, Task);
 
         return this.apply(task, args);
     }
