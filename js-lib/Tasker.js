@@ -157,7 +157,7 @@ class Tasker
         if (Object.keys(this._taskInfos_Waiting).length > 0 &&
                 Object.keys(this._taskInfos_Executing).length === 0 &&
                 this._processCalls === 0) {
-            abLog.warn('Unexecuted tasks in waiting queue:',
+            console.warn('Unexecuted tasks in waiting queue:',
                     Object.keys(this._taskInfos_Waiting));
         }
     }
