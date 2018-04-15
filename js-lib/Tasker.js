@@ -1,5 +1,6 @@
 'use strict';
 
+const abLog = require('ab-log');
 const js0 = require('js0');
 
 const Task = require('./Task');
@@ -120,7 +121,7 @@ class Tasker
                         if (err instanceof Error)
                             err = err.stack;
 
-                        console.log('Unhandled task promise rejection:', err);
+                        console.log(abLog.cError('Unhandled task promise rejection:'), err);
                     }
 
                     // console.log('Process B', task_info.task.name);
