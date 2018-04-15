@@ -1,6 +1,6 @@
 {
   "name": "ab-tasks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "dependencies": {
     "abLog": "1.0.*",
     "js0": "0.0.*"
