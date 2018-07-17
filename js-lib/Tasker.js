@@ -9,12 +9,12 @@ const Task = require('./Task');
 class Tasker
 {
 
-    constructor(wait_time = 100)
+    constructor(waitTime = 100)
     {
-        Object.defineProperties(this, {
-            _waitTime: { value: wait_time, },
+        this._waitTime = waitTime;
 
-            _taskInfos_Waiting: { value: new Map(), },
+        Object.defineProperties(this, {
+            _taskInfos_Waiting: { value: new Map(), editable: true, },
             _taskInfos_Executing: { value: new Map(), },
 
             _processCalls: { value: 0, writable: true, },
@@ -41,6 +41,11 @@ class Tasker
         js0.args(arguments, Task);
 
         return this.apply(task, args);
+    }
+
+    setWaitTime(waitTime)
+    {
+        this._waitTime = waitTime; 
     }
 
 
