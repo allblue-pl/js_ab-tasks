@@ -21,9 +21,9 @@ class Tasker
         });
     }
 
-    apply(task, args)
+    apply(task, args = [])
     {
-        js0.args(arguments, Task);
+        js0.args(arguments, Task, [ Array, js0.Default ]);
 
         this._addWaitingTask(task, args, Date.now());
 
@@ -38,7 +38,7 @@ class Tasker
 
     call(task, ...args)
     {
-        js0.args(arguments, Task);
+        js0.args(arguments, Task, js0.ExtraArgs);
 
         return this.apply(task, args);
     }
