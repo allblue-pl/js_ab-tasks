@@ -16,21 +16,18 @@ const tasks = new class tasks
     }
 
 
-    constructor()
-    {
+    constructor() {
         this._defaultTasker = null;
     }
 
-    apply(...args)
-    {
+    apply(...args) {
         if (this._defaultTasker === null)
             this._defaultTasker = new Tasker();
 
         this._defaultTasker.apply.apply(this._defaultTasker, args);
     }
 
-    call(...args)
-    {
+    call(...args) {
         if (this._defaultTasker === null)
             this._defaultTasker = new Tasker();
 

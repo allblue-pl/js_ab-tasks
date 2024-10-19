@@ -5,8 +5,7 @@ const js0 = require('js0');
 
 class Task {
 
-    constructor(task_name, fn)
-    {
+    constructor(task_name, fn) {
         js0.args(arguments, 'string', [ 'function', Promise ]);
 
         Object.defineProperties(this, {
@@ -20,15 +19,13 @@ class Task {
         });
     }
 
-    catch(catch_fn)
-    {
+    catch(catch_fn) {
         this._catches.push(catch_fn);
 
         return this;
     }
 
-    chain(task, ...args)
-    {
+    chain(task, ...args) {
         js0.args(arguments, Task);
 
         this._chainedTaskCalls.push(new Task.Call(task, args));
@@ -36,8 +33,7 @@ class Task {
         return this;
     }
 
-    waitFor(task_names_pattern)
-    {
+    waitFor(task_names_pattern) {
         this._waitFors.push(task_names_pattern);
 
         return this;

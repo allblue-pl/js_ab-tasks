@@ -9,8 +9,7 @@ const Task = require('./Task');
 class Tasker
 {
 
-    constructor(waitTime = 100)
-    {
+    constructor(waitTime = 100) {
         this._waitTime = waitTime;
 
         Object.defineProperties(this, {
@@ -21,8 +20,7 @@ class Tasker
         });
     }
 
-    apply(task, args = [])
-    {
+    apply(task, args = []) {
         js0.args(arguments, Task, [ Array, js0.Default ]);
 
         this._addWaitingTask(task, args, Date.now());
@@ -36,29 +34,25 @@ class Tasker
         }, this._waitTime + 1);
     }
 
-    call(task, ...args)
-    {
+    call(task, ...args) {
         js0.args(arguments, Task, js0.ExtraArgs);
 
         return this.apply(task, args);
     }
 
-    setWaitTime(waitTime)
-    {
+    setWaitTime(waitTime) {
         this._waitTime = waitTime; 
     }
 
 
-    _addChainedTaskCalls(task_info)
-    {
+    _addChainedTaskCalls(task_info) {
         for (var i = 0; i < task_info.chainedTaskCalls.length; i++) {
             var task_call = task_info.chainedTaskCalls[i];
             this._addWaitingTask(task_call.task, task_call.args, -1);
         }
     }
 
-    _addWaitingTask(task, args, last_call)
-    {
+    _addWaitingTask(task, args, last_call) {
         if (!(task.name in this._taskInfos_Waiting))
             this._taskInfos_Waiting[task.name] = new Task.Info();
 
@@ -68,8 +62,7 @@ class Tasker
         return task_info;
     }
 
-    _areWaitForsFinished(task_info)
-    {
+    _areWaitForsFinished(task_info) {
         var wait_fors = task_info.task._waitFors
 
         for (var i = 0; i < wait_fors.length; i++) {
@@ -93,8 +86,7 @@ class Tasker
         return true;
     }
 
-    _execTaskInfo(task_info)
-    {
+    _execTaskInfo(task_info) {
         // task_info.callsCount--;
         // if (task_info.callsCount > 0)
         //     return;
@@ -143,14 +135,12 @@ class Tasker
         }
     }
 
-    _waitForToRegExp(str)
-    {
+    _waitForToRegExp(str) {
         return '^' + str.replace(/[-[\]{}()+?.,\\^$|#\s]/g, "\\$&")
                 .replace('*', '.*') + '$';
     }
 
-    _processWaitingTasks()
-    {
+    _processWaitingTasks() {
         for (var task_name in this._taskInfos_Waiting) {
             var task_info = this._taskInfos_Waiting[task_name];
 
@@ -168,8 +158,7 @@ class Tasker
         }
     }
 
-    _isTaskInfoReadyToExec(task_info)
-    {
+    _isTaskInfoReadyToExec(task_info) {
         // console.log('isTaskInfoReadyToExec', task_info.task.name);
 
         if (task_info.lastCall !== -1) {
