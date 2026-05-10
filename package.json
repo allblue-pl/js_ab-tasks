@@ -1,8 +1,13 @@
 {
   "name": "ab-tasks",
   "version": "0.0.3",
+  "type": "module",
+  "main": "index.js",
   "dependencies": {
-    "ab-log": "1.0.*",
-    "js0": "0.0.*"
+
+  },
+  "devDependencies": {
+    "@types/node": "25.6.*",
+    "typescript": "6.0.*"
   }
 }

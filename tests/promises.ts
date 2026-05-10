@@ -1,39 +1,39 @@
+import Task from "../ts-lib/Task.ts";
+import Tasker from "../ts-lib/Tasker.ts";
 
-var abTasks = require('../index.js');
 
+let tasker = new Tasker();
 
-var tasker = new abTasks.Tasker();
-
-var t = function() {
-    return new abTasks.Task('promise.t', function(args_array) {
-        return new Promise(function(resolve, reject) {
-            setTimeout(function() {
+let t = (): Task<number> => {
+    return new Task('promise.t', function(args_array) {
+        return new Promise<boolean>(function(resolve, reject) {
+            setTimeout(() => {
                 console.log('Task `t` triggered with args:', args_array);
-                resolve();
+                resolve(true);
             }, 3000);
         });
     });
 };
 
-module.exports = function() {
-    return new Promise((resolve, reject) => {
+export default () => {
+    return new Promise<void>((resolve, reject) => {
         console.log('\nPROMISES\n');
         console.log('Expected result: [ 0, 1, 2, 3 ] -> 3000 break -> [ 4, 5 ]\n');
 
         tasker.call(t(), 0);
         tasker.call(t(), 1);
 
-        setTimeout(function() {
+        setTimeout(() => {
             tasker.call(t(), 2);
             tasker.call(t(), 3);
         }, 90);
 
-        setTimeout(function() {
+        setTimeout(() => {
             tasker.call(t(), 4);
             tasker.call(t(), 5);
         }, 500);
 
-        setTimeout(function() {
+        setTimeout(() => {
             resolve();
         }, 7000);
     });
