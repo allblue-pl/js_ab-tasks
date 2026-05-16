@@ -30,6 +30,20 @@ export default class Tasker {
         }, this.#waitTime + 1);
     }
 
+    getActiveTaskNames(): { executing: Array<string>, waiting: Array<string>} {
+        let executingTaskNames = [];
+        for (let [ taskName, taskInfo ] of this.#taskInfos_Executing)
+            executingTaskNames.push(taskName);
+        let waitingTaskNames = [];
+        for (let [ taskName, taskInfo ] of this.#taskInfos_Waiting)
+            waitingTaskNames.push(taskName);
+
+        return {
+            executing: executingTaskNames,
+            waiting: waitingTaskNames,
+        };
+    }
+
     setWaitTime(waitTime: number): void {
         this.#waitTime = waitTime; 
     }
