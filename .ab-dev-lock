@@ -1,0 +1,4 @@
+{
+  "type": "link",
+  "hash": "{\"abDependencies\":{\"ab-log\":{\"url\":\"https://github.com/allblue-pl/node_ab-lod\",\"branch\":\"main\"}}}"
+}
